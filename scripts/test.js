@@ -11,6 +11,23 @@ document.addEventListener("DOMContentLoaded", () => {
       const times = data.hourly.time;
       const temperatures = data.hourly.temperature_2m;
       const tableBody = document.querySelector("#content");
+
+      let ctx = document.querySelector("#chart").getContext("2d");
+
+      var hours = times.map(function(x){return x.split('T')[1] === "00:00" ? x.replace(/T/, ' ') : x.split('T')[1];});
+
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: hours,
+          datasets: [{
+            label: "Temperature",
+            data: temperatures,
+            backgroundColor: "rgba(1, 140, 205, 0.6)",
+            borderWidth: 1
+          }]
+        }
+      });
   
       for (let i = 0; i < times.length; i++) {
         const row = document.createElement("tr");
