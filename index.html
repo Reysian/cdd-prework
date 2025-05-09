@@ -9,7 +9,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
-        <script src="scripts/test.js" defer></script>
+        <script src="scripts/temperature.js" defer></script>
     </head>
 
     <body>
@@ -26,15 +26,14 @@
                     <div class="form-group">
                         <input id="latitude" type="number" class="form-control" placeholder="Latitude" max=90 min=-90 step="any"/>
                         <input id="longitude" type="number" class="form-control" placeholder="Longitude" max=180 min=-180 step="any"/>
-                        <button id="submit" class="btn btn-default" type="submit" title="submit coordinates">
+                        <button id="submit" class="btn btn-default" type="submit" title="Submit coordinates.">
                             <i class="glyphicon glyphicon-chevron-right"></i>
                         </button>
-                        <button id="reset" class="btn btn-default" title="reset coordinates">
+                        <button id="reset" class="btn btn-default" title="Reset coordinates.">
                             <i class="glyphicon glyphicon-refresh"></i>
                         </button>
                     </div>
                 </form>  
-                
             </div>
         </nav>
         <div class="container">
@@ -47,7 +46,7 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Time</th>
+                        <th>Time (UTC)</th>
                         <th>Temperature</th>
                     </tr>
                 </thead>

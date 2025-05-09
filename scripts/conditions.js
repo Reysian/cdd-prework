@@ -52,10 +52,10 @@ async function fetchWeatherData() {
       keyCell.textContent = formatKey(key);
   
       const valueCell = document.createElement("td");
-      valueCell.textContent = formatValue(value);
+      valueCell.textContent = formatValue(value, units[key]);
 
-      if (units[key] !== "iso8601")
-        valueCell.textContent += ' ' + units[key];
+      if (units[key] === "iso8601")
+        valueCell.textContent = formatValue(value, "(UTC)");
 
       if (key === "is_day")
         valueCell.textContent = value === 1 ? "Yes" : "No";
@@ -79,10 +79,11 @@ function formatKey(key) {
   .replace(/\b\w/g, char => char.toUpperCase());
 }
 
-function formatValue(value) {
+function formatValue(value, unit) {
   return value
   .toString()
-  .replace(/T/g, ' ');
+  .replace(/T/g, ' ')
+  + ' ' + unit;
 }
 
 function getCondition(wmoCode) {
