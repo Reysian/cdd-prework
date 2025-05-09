@@ -7,11 +7,13 @@ submit.onclick = function() {
     sessionStorage.setItem('lat', latField.value);
   if (lonField.value)
     sessionStorage.setItem('lon', lonField.value);
-  if (!latField.value && !lonField.value) {
-    sessionStorage.setItem('lat', '52.52')
-    sessionStorage.setItem('lon', '13.41')
-  }  
 };
+
+reset.onclick = function() {
+  sessionStorage.setItem('lat', '52.52')
+  sessionStorage.setItem('lon', '13.41')
+  location.reload();
+}
 
 document.addEventListener("DOMContentLoaded", () => {
   fetchWeatherData();
