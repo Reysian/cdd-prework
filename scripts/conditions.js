@@ -1,10 +1,16 @@
-const button = document.querySelector("#submit");
+const submit = document.querySelector("#submit");
 const latField = document.getElementById('latitude');
 const lonField = document.getElementById('longitude');
 
-button.onclick = function() {
-  sessionStorage.setItem('lat', latField.value);
-  sessionStorage.setItem('lon', lonField.value);
+submit.onclick = function() {
+  if (latField.value)
+    sessionStorage.setItem('lat', latField.value);
+  if (lonField.value)
+    sessionStorage.setItem('lon', lonField.value);
+  if (!latField.value && !lonField.value) {
+    sessionStorage.setItem('lat', '52.52')
+    sessionStorage.setItem('lon', '13.41')
+  }  
 };
 
 document.addEventListener("DOMContentLoaded", () => {
