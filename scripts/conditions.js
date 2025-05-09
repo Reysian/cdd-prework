@@ -1,56 +1,80 @@
+const button = document.querySelector("#submit");
+const latField = document.getElementById('latitude');
+const lonField = document.getElementById('longitude');
+
+button.onclick = function() {
+  sessionStorage.setItem('lat', latField.value);
+  sessionStorage.setItem('lon', lonField.value);
+};
+
 document.addEventListener("DOMContentLoaded", () => {
-    fetchWeatherData();
+  fetchWeatherData();
 });
   
 async function fetchWeatherData() {
 
-    const tableBody = document.querySelector("#content");
+  const tableBody = document.querySelector("#content");
+  const tableHeader = document.querySelector("#header");
 
-    try {
-      const url = "https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,rain,snowfall,showers,weather_code,cloud_cover,pressure_msl,surface_pressure,wind_speed_10m,wind_direction_10m,wind_gusts_10m";
-      const response = await fetch(url);
-      const data = await response.json();
-  
-      const units = data.current_units;
-      const conditions = data.current;
-  
-      for (const [key, value] of Object.entries(conditions)) {
-        const row = document.createElement("tr");
-  
-        const keyCell = document.createElement("td");
-        keyCell.textContent = formatKey(key);
-  
-        const valueCell = document.createElement("td");
-        valueCell.textContent = formatValue(value);
+  const params = new URLSearchParams(window.location.search);
+  if (params.size) {
+    lat = params.get('lat') || '52.52';
+    lon = params.get('lon') || '13.41';
+    console.log("if");
+  } else {
+    lat = sessionStorage.getItem('lat') || '52.52';
+    lon = sessionStorage.getItem('lon') || '13.41';
+    console.log("else");
+  }
 
-        if (units[key] !== "iso8601")
-          valueCell.textContent += ' ' + units[key];
+  tableHeader.innerText += " at " + lat + " and " + lon;
 
-        if (key === "is_day")
-          valueCell.textContent = value === 1 ? "Yes" : "No";
-
-        if (key === "weather_code")
-          valueCell.textContent = value + " (" + getCondition(value) + ")";
+  try {
+    const url = "https://api.open-meteo.com/v1/forecast?latitude=" + lat + "&longitude=" + lon + "&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,rain,snowfall,showers,weather_code,cloud_cover,pressure_msl,surface_pressure,wind_speed_10m,wind_direction_10m,wind_gusts_10m";
+    const response = await fetch(url);
+    const data = await response.json();
   
-        row.appendChild(keyCell);
-        row.appendChild(valueCell);
-        tableBody.appendChild(row);
-      }
-    } catch (error) {
-      tableBody.innerHTML = '<tr>Error fetching weather data.</tr>';
+    const units = data.current_units;
+    const conditions = data.current;
+  
+    for (const [key, value] of Object.entries(conditions)) {
+      const row = document.createElement("tr");
+  
+      const keyCell = document.createElement("td");
+      keyCell.textContent = formatKey(key);
+  
+      const valueCell = document.createElement("td");
+      valueCell.textContent = formatValue(value);
+
+      if (units[key] !== "iso8601")
+        valueCell.textContent += ' ' + units[key];
+
+      if (key === "is_day")
+        valueCell.textContent = value === 1 ? "Yes" : "No";
+
+      if (key === "weather_code")
+        valueCell.textContent = value + " (" + getCondition(value) + ")";
+  
+      row.appendChild(keyCell);
+      row.appendChild(valueCell);
+      tableBody.appendChild(row);
     }
+  } catch (error) {
+    console.error('Error fetching weather:', err);
+    tableBody.innerHTML = '<tr>Error fetching weather data.</tr>';
+  }
 }
 
 function formatKey(key) {
-    return key
-    .replace(/_/g, ' ')
-    .replace(/\b\w/g, char => char.toUpperCase());
+  return key
+  .replace(/_/g, ' ')
+  .replace(/\b\w/g, char => char.toUpperCase());
 }
 
 function formatValue(value) {
-    return value
-    .toString()
-    .replace(/T/g, ' ');
+  return value
+  .toString()
+  .replace(/T/g, ' ');
 }
 
 function getCondition(wmoCode) {

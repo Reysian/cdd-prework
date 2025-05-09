@@ -1,10 +1,35 @@
+const button = document.querySelector("#submit");
+const latField = document.getElementById('latitude');
+const lonField = document.getElementById('longitude');
+
+button.onclick = function() {
+  sessionStorage.setItem('lat', latField.value);
+  sessionStorage.setItem('lon', lonField.value);
+};
+
 document.addEventListener("DOMContentLoaded", () => {
     fetchWeatherData();
-  });
-  
+});
+
+
 async function fetchWeatherData() {
+
+  const chartHeader = document.querySelector("#header");
+  const params = new URLSearchParams(window.location.search);
+  if (params.size) {
+    lat = params.get('lat') || '52.52';
+    lon = params.get('lon') || '13.41';
+    console.log("if");
+  } else {
+    lat = sessionStorage.getItem('lat') || '52.52';
+    lon = sessionStorage.getItem('lon') || '13.41';
+    console.log("else");
+  }
+
+  chartHeader.innerText += " at " + lat + " and " + lon;
+
   try {
-    const url = "https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.419&hourly=temperature_2m";
+    const url = "https://api.open-meteo.com/v1/forecast?latitude=" + lat + "&longitude=" + lon + "&hourly=temperature_2m";
     const response = await fetch(url);
     const data = await response.json();
 
