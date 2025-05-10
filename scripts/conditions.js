@@ -1,6 +1,8 @@
 const submit = document.querySelector("#submit");
 const latField = document.getElementById('latitude');
 const lonField = document.getElementById('longitude');
+const tableBody = document.querySelector("#content");
+const tableHeader = document.querySelector("#header");
 
 submit.onclick = function() {
   if (latField.value)
@@ -20,20 +22,14 @@ document.addEventListener("DOMContentLoaded", () => {
 });
   
 async function fetchWeatherData() {
+  
+  lat = sessionStorage.getItem('lat') || '52.52';
+  lon = sessionStorage.getItem('lon') || '13.41';
 
-  const tableBody = document.querySelector("#content");
-  const tableHeader = document.querySelector("#header");
-
-  const params = new URLSearchParams(window.location.search);
-  if (params.size) {
-    lat = params.get('lat') || '52.52';
-    lon = params.get('lon') || '13.41';
-    console.log("if");
-  } else {
-    lat = sessionStorage.getItem('lat') || '52.52';
-    lon = sessionStorage.getItem('lon') || '13.41';
-    console.log("else");
-  }
+  if (Math.abs(lat) > 90)
+    lat = 52.52;
+  if (Math.abs(lon) > 180)
+    lon = 13.41;
 
   tableHeader.innerText += " at " + lat + " and " + lon;
 
@@ -46,9 +42,10 @@ async function fetchWeatherData() {
     const conditions = data.current;
   
     for (const [key, value] of Object.entries(conditions)) {
+
       const row = document.createElement("tr");
-  
       const keyCell = document.createElement("td");
+      
       keyCell.textContent = formatKey(key);
   
       const valueCell = document.createElement("td");
@@ -68,8 +65,8 @@ async function fetchWeatherData() {
       tableBody.appendChild(row);
     }
   } catch (error) {
-    console.error('Error fetching weather:', err);
-    tableBody.innerHTML = '<tr>Error fetching weather data.</tr>';
+    console.error('Error fetching weather data:', err);
+    tableBody.textContent = "Error fetching weather data.";
   }
 }
 

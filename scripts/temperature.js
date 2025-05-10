@@ -2,6 +2,9 @@ const submit = document.querySelector("#submit");
 const reset = document.querySelector("#reset");
 const latField = document.getElementById('latitude');
 const lonField = document.getElementById('longitude');
+const tableBody = document.querySelector("#content");
+const chartHeader = document.querySelector("#header");
+const ctx = document.querySelector("#chart").getContext("2d");
 
 submit.onclick = function() {
   if (latField.value)
@@ -20,20 +23,15 @@ document.addEventListener("DOMContentLoaded", () => {
   fetchWeatherData();
 });
 
+async function fetchWeatherData() { 
+  
+  lat = sessionStorage.getItem('lat') || '52.52';
+  lon = sessionStorage.getItem('lon') || '13.41';
 
-async function fetchWeatherData() {
-
-  const chartHeader = document.querySelector("#header");
-  const params = new URLSearchParams(window.location.search);
-  if (params.size) {
-    lat = params.get('lat') || '52.52';
-    lon = params.get('lon') || '13.41';
-    console.log("if");
-  } else {
-    lat = sessionStorage.getItem('lat') || '52.52';
-    lon = sessionStorage.getItem('lon') || '13.41';
-    console.log("else");
-  }
+  if (Math.abs(lat) > 90)
+    lat = 52.52;
+  if (Math.abs(lon) > 180)
+    lon = 13.41;
 
   chartHeader.innerText += " at " + lat + " and " + lon;
 
@@ -44,9 +42,6 @@ async function fetchWeatherData() {
 
     const times = data.hourly.time;
     const temperatures = data.hourly.temperature_2m;
-    const tableBody = document.querySelector("#content");
-
-    let ctx = document.querySelector("#chart").getContext("2d");
 
     let chartTimes = times.map(function(x){return x.replace(/T/g, '\n').slice(5)});
     let tableTimes = times.map(function(x){return x.replace(/T/g, ' ');});
@@ -88,5 +83,6 @@ async function fetchWeatherData() {
     }
   } catch (error) {
     console.error("Error fetching weather data:", error);
+    tableBody.textContent = "Error fetching weather data.";
   }
 }
