@@ -1,3 +1,10 @@
+/*
+  File: conditions.js
+  Description: Fetches current weather data and conditions from open-meteo API and
+  creates a table to display the data clearly. Takes user input in the form of latitude
+  and longitude coordinates, and fetches corresponding weather data from open-mateo API.
+*/
+
 const submit = document.querySelector("#submit");
 const latField = document.getElementById('latitude');
 const lonField = document.getElementById('longitude');

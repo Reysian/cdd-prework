@@ -1,3 +1,11 @@
+/*
+  File: temperature.js
+  Description: Fetches 7-day hourly temperature forcast from open-meteo API and
+  creates a line chart and a time table to display the data clearly. Takes user
+  input in the form of latitude and longitude coordinates, and fetches corresponding
+  weather data from open-mateo API.
+*/
+
 const submit = document.querySelector("#submit");
 const reset = document.querySelector("#reset");
 const latField = document.getElementById('latitude');
