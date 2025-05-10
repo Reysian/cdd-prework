@@ -23,4 +23,4 @@ for 7 days using the Open-Meteo API.
 5. To reset to default coordinates, press the `Reset` button to the right of the `Submit` button.
 
 ## Credits
-Created on 2025-05-10 for the "Coding the Dream" advanced pre-work assignment.
+Created by Ethan Norrid on 2025-05-10 for the "Coding the Dream" advanced pre-work assignment.
