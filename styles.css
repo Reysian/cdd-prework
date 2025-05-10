@@ -1,0 +1,17 @@
+body {
+    background: linear-gradient(#c4e4ff, #ffffff);
+    background-attachment: fixed;
+}
+
+.form-color {
+    background-color: rgb(42, 41, 54);
+    color: rgb(214, 214, 214);
+}
+
+.table-color {
+    color: rgb(94, 94, 94);
+}
+
+.navbar {
+    border-radius: 0;
+}

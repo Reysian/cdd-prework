@@ -6,6 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Weather App</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="styles.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
@@ -13,7 +14,7 @@
     </head>
 
     <body>
-        <nav class="navbar navbar-default">
+        <nav class="navbar navbar-inverse">
             <div class="container-fluid">
                 <div class="navbar-header">
                     <a class="navbar-brand" href="index.html">WeatherApp</a>
@@ -24,12 +25,12 @@
                 </ul>
                 <form class="navbar-form navbar-right">
                     <div class="form-group">
-                        <input id="latitude" type="number" class="form-control" placeholder="Latitude" max=90 min=-90 step="any"/>
-                        <input id="longitude" type="number" class="form-control" placeholder="Longitude" max=180 min=-180 step="any"/>
-                        <button id="submit" class="btn btn-default" type="submit" title="Submit coordinates.">
+                        <input id="latitude" type="number" class="form-control navbar-inverse form-color" placeholder="Latitude" max=90 min=-90 step="any"/>
+                        <input id="longitude" type="number" class="form-control navbar-inverse form-color" placeholder="Longitude" max=180 min=-180 step="any"/>
+                        <button id="submit" class="btn btn-default navbar-inverse form-color" type="submit" title="Submit coordinates.">
                             <i class="glyphicon glyphicon-chevron-right"></i>
                         </button>
-                        <button id="reset" class="btn btn-default" title="Reset coordinates.">
+                        <button id="reset" class="btn btn-default navbar-inverse form-color" title="Reset coordinates.">
                             <i class="glyphicon glyphicon-refresh"></i>
                         </button>
                     </div>
@@ -42,7 +43,7 @@
                 <canvas id="chart"></canvas>
             </div>
         </div>
-        <div id="root" class="container">
+        <div id="root" class="container table-color">
             <table class="table">
                 <thead>
                     <tr>
